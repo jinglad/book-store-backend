@@ -7,9 +7,8 @@ import { ILogin, IRefreshTokenResponse } from './auth.interface';
 import { User } from '../users/user.model';
 
 const login = async (payload: ILogin) => {
-  const { phoneNumber, password } = payload;
-  console.log('payload', payload);
-  const isUserExist = await User.isUserExist(phoneNumber);
+  const { email, password } = payload;
+  const isUserExist = await User.isUserExist(email);
 
   if (!isUserExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
@@ -22,16 +21,16 @@ const login = async (payload: ILogin) => {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect password');
   }
 
-  const { _id: userId, role } = isUserExist;
+  const { _id: userId } = isUserExist;
 
   const accessToken = jwtHelpers.createToken(
-    { userId, role },
+    { userId },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string,
   );
 
   const refreshToken = jwtHelpers.createToken(
-    { userId, role },
+    { userId },
     config.jwt.refresh_secret as Secret,
     config.jwt.refresh_expires_in as string,
   );
@@ -66,7 +65,6 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
   const newAccessToken = jwtHelpers.createToken(
     {
       userId: isUserExist._id,
-      role: isUserExist.role,
     },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string,

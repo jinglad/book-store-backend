@@ -7,6 +7,7 @@ import { ILoginResponse, IRefreshTokenResponse } from './auth.interface';
 
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   const { ...loginData } = req.body;
+  console.log(loginData);
   const result = await AuthService.login(loginData);
   const { refreshToken, accessToken } = result;
 
