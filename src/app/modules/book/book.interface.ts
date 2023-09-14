@@ -6,6 +6,11 @@ export interface IBook {
   author: Types.ObjectId | Iuser;
   genre: string;
   publicationDate: Date;
+  reviews?: string[];
+}
+
+export interface IAddBook extends IBook {
+  review?: string;
 }
 
 export type IBookFilterableFields = {

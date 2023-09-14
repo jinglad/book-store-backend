@@ -8,8 +8,7 @@ const BookSchema = new Schema<IBook>(
       required: true,
     },
     author: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
+      type: String,
       required: true,
     },
     genre: {
@@ -19,6 +18,9 @@ const BookSchema = new Schema<IBook>(
     publicationDate: {
       type: Date,
       required: true,
+    },
+    reviews: {
+      type: ['String'],
     },
   },
   { timestamps: true, toJSON: { virtuals: true } },
