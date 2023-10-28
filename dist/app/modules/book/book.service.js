@@ -56,7 +56,6 @@ const getBooks = (filters, paginationOptions) => __awaiter(void 0, void 0, void 
             delete filtersData[prop];
         }
     }
-    console.log(filtersData);
     if (Object.keys(filtersData).length) {
         andConditions.push({
             $and: Object.entries(filtersData).map(([field, value]) => ({
